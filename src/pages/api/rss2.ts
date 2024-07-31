@@ -8,7 +8,9 @@ type ResponseData = {
 
 async function generateRssFeed() {
   const response = await (
-    await fetch("https://digitalzone.vercel.app/games.json")
+    await fetch(
+      "https://raw.githubusercontent.com/god0654/games.json/main/games.json",
+    )
   ).json();
   const sortedGames = response.sort(
     (a: Game, b: Game) =>
