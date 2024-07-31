@@ -21484,5 +21484,32 @@
     ],
     "achievements": true,
     "dateUpdated": "2024-07-31T11:22:17.986Z"
+  },
+  {
+    "name": "Mini Airways",
+    "id": "Mini_Airways",
+    "notes": "",
+    "subName": "Portable V0.8.1 & Build 15198817",
+    "description": "Mini Airways is a real-time management game where you play the role of an air traffic controller. Clear your aircraft to takeoff & land, direct them to the destination...and most of all don't let them crash!! London, Tokyo, Shanghai... Test your ATC skills in distinctive maps around the globe!",
+    "link": "https://digitalzone.vercel.app/games/#Mini_Airways",
+    "thumbnail": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2289650/header.jpg?t=1722423536",
+    "gameplay": "https://www.youtube.com/watch?v=kxNuigbUTA4",
+    "tags": [
+      "gse"
+    ],
+    "based": {
+      "info": "nfo",
+      "credits": "TENOKE",
+      "link": "https://api.predb.net/nfoimg/Mini.Airways-TENOKE.png"
+    },
+    "csrinru": "https://cs.rin.ru/forum/viewtopic.php?f=10&t=142393&p=3098725&hilit=#p3098725",
+    "downloads": [
+      {
+        "name": "FileCrypt.cc",
+        "link": "https://filecrypt.cc/Container/6B93C23ECA.html"
+      }
+    ],
+    "achievements": true,
+    "dateUpdated": "2024-07-31T15:41:15.750Z"
   }
 ]
