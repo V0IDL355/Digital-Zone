@@ -50,7 +50,6 @@ export default async function Rss2(
   const feed = await generateRssFeed();
   res.status(200);
   res.setHeader("Content-Type", "text/xml");
-  res.setHeader("Cache-Control", "public, s-maxage=360");
   res.write(feed.rss2());
   res.end();
 }
