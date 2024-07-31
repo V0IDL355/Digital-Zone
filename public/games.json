@@ -21429,5 +21429,60 @@
     ],
     "achievements": false,
     "dateUpdated": "2024-07-30T23:35:25.159Z"
+  },
+  {
+    "name": "Minds Beneath Us",
+    "id": "Minds_Beneath_Us",
+    "notes": "",
+    "subName": "Portable V1.0.1 & Build 14666394",
+    "description": "Embark on a thrilling Sci-Fi journey in a futuristic Asian city in MINDS BENEATH US. In a society fully automated by advanced AI, you're ensnared within a foreign body, accompanied by its original owner's subconscious. Together, face impending challenges and confront an uncertain destiny.",
+    "link": "https://digitalzone.vercel.app/games/#Minds_Beneath_Us",
+    "thumbnail": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1610440/header.jpg?t=1722416343",
+    "gameplay": "https://www.youtube.com/watch?v=bRI-7392wik",
+    "tags": [
+      "gse"
+    ],
+    "based": {
+      "info": "nfo",
+      "credits": "SKIDROW",
+      "link": "https://api.predb.net/nfoimg/Minds.Beneath.Us-SKIDROW.png"
+    },
+    "csrinru": "https://cs.rin.ru/forum/viewtopic.php?f=10&t=113017&p=3098591&hilit=#p3098591",
+    "downloads": [
+      {
+        "name": "FileCrypt.cc",
+        "link": "https://filecrypt.cc/Container/80D912A1E3.html"
+      }
+    ],
+    "achievements": true,
+    "dateUpdated": "2024-07-31T11:19:59.102Z"
+  },
+  {
+    "name": "You Suck at Parking® – Complete Edition + Original Soundtrack Bundle",
+    "id": "You_Suck_at_Parking",
+    "notes": "",
+    "subName": "Portable V1.11.12 + Build 13237043 + DLCs Included & Online Supported",
+    "description": "You Suck at Parking® is the only racing game where your goal is to stop and parking your ride is more important than your driving skills. It’s a hot race against the clock as you drift, cruise, and go airborne over 250 frustratingly fun, wild levels.",
+    "link": "https://digitalzone.vercel.app/games/#You_Suck_at_Parking",
+    "thumbnail": "https://shared.akamai.steamstatic.com/store_item_assets/steam/bundles/29306/gow6kntnjo4biiat/header_ratio.jpg?t=1669646546",
+    "gameplay": "https://www.youtube.com/watch?v=fJQWy2CDxxI",
+    "tags": [
+      "gse",
+      "ofme"
+    ],
+    "based": {
+      "info": "nfo",
+      "credits": "TiNYiSO",
+      "link": "https://api.predb.net/nfoimg/You.Suck.At.Parking.Complete.Edition-TiNYiSO.png"
+    },
+    "csrinru": "https://cs.rin.ru/forum/viewtopic.php?f=10&t=107867&p=3098610&hilit=#p3098610",
+    "downloads": [
+      {
+        "name": "FileCrypt.cc",
+        "link": "https://filecrypt.cc/Container/D67B8172DE.html"
+      }
+    ],
+    "achievements": true,
+    "dateUpdated": "2024-07-31T11:22:17.986Z"
   }
 ]
