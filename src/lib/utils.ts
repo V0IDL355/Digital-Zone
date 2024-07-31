@@ -95,7 +95,7 @@ export interface Game {
 
 export function getImage(str: string) {
   if (str.startsWith("thumbnails"))
-    return "https://digitalzone.vercel.app/" + str;
+    return "https://raw.githubusercontent.com/god0654/games.json/main/" + str;
   return str;
 }
 

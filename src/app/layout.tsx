@@ -15,7 +15,7 @@ const fontSans = FontSans({
 export const metadata: Metadata = {
   title: "Digital Zone",
   description: "𝐃𝐢𝐠𝐢𝐭𝐚𝐥𝐙𝐨𝐧𝐞 ~ 𝐆𝐚𝐦𝐞𝐬 & 𝐍𝐞𝐰𝐬",
-  icons: "icon.png",
+  icons: "https://github.com/god0654/games.json/blob/main/icon.png?raw=true",
 };
 
 export default function RootLayout({
@@ -28,7 +28,7 @@ export default function RootLayout({
       <head>
         <meta content="https://digitalzone.vercel.app/" property="og:url" />
         <meta
-          content="https://digitalzone.vercel.app/icon.png"
+          content="https://github.com/god0654/games.json/blob/main/icon.png?raw=true"
           property="og:image"
         />
         <meta content="#09090b" data-react-helmet="true" name="theme-color" />

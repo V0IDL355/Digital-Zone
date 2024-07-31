@@ -22,7 +22,8 @@ async function generateRssFeed() {
     description: "DigitalZone Games & News",
     id: "digital_zone",
     link: "https://digitalzone.vercel.app/",
-    favicon: "https://digitalzone.vercel.app/icon.png",
+    favicon:
+      "https://github.com/god0654/games.json/blob/main/icon.png?raw=true",
     copyright: "DZ",
     generator: "DZ",
     updated: new Date(sortedGames[sortedGames.length - 1].dateUpdated),
