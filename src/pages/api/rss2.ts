@@ -35,7 +35,7 @@ async function generateRssFeed() {
       link: game.link,
       date: new Date(game.dateUpdated),
       image: getImage(game.thumbnail),
-      guid: game.id,
+      guid: `${game.name} | ${game.subName}`,
       content: game.subName,
     });
   });
