@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import navigation from "@/components/utils/navigation";
 import { Menubar, MenubarMenu } from "@/components/ui/menubar";
 import { Toggle } from "@/components/ui/toggle";
-import { Game, tags } from "@/components/utils/utils";
+import { Game, tags } from "@/lib/utils";
 import {
   Select,
   SelectContent,

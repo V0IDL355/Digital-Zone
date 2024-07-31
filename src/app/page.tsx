@@ -14,7 +14,13 @@ export default function Home() {
 
   useEffect(() => {
     (async () => {
-      setGamesTotal((await (await fetch("games.json")).json()).length);
+      setGamesTotal(
+        (
+          await (
+            await fetch("https://digitalzone.vercel.app/games.json")
+          ).json()
+        ).length,
+      );
     })();
   }, []);
 

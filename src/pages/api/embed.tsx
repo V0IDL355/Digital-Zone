@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { Game, getImage } from "@/components/utils/utils";
+import { Game, getImage } from "@/lib/utils";
 import Vibrant from "node-vibrant";
 import sharp from "sharp";
 
@@ -21,7 +21,9 @@ export default async function Embed(
   res: NextApiResponse<ResponseData>,
 ) {
   const response = await (
-    await fetch("https://digitalzone.vercel.app/games.json")
+    await fetch(
+      "https://raw.githubusercontent.com/god0654/games.json/main/games.json",
+    )
   ).json();
   const sortedGames = response.sort(
     (a: Game, b: Game) =>

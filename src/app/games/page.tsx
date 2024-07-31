@@ -4,7 +4,7 @@ import { Menubar, MenubarMenu } from "@/components/ui/menubar";
 import React, { useEffect, useState } from "react";
 import navigation from "@/components/utils/navigation";
 import SearchElement from "@/components/utils/search";
-import { Game } from "@/components/utils/utils";
+import { Game } from "@/lib/utils";
 
 import {
   Pagination,
@@ -48,7 +48,11 @@ export default function Games() {
 
   useEffect(() => {
     (async () => {
-      const response = await (await fetch("games.json")).json();
+      const response = await (
+        await fetch(
+          "https://raw.githubusercontent.com/god0654/games.json/main/games.json",
+        )
+      ).json();
       const data = response.sort(
         (a: Game, b: Game) =>
           new Date(b.dateUpdated).getTime() - new Date(a.dateUpdated).getTime(),

@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
-import { Game, getImage } from "@/components/utils/utils";
+import { Game, getImage } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Image from "next/image";
 

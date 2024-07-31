@@ -9,12 +9,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { formatReadableDate } from "@/components/utils/date";
+import { formatReadableDate, Game, getImage, tags } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import React from "react";
 import { Download, Globe, Link2 } from "lucide-react";
-import { Game, getImage, tags } from "@/components/utils/utils";
-import Image from "next/image";
 import {
   Dialog,
   DialogContent,
@@ -25,6 +23,11 @@ import {
 } from "@/components/ui/dialog";
 import { SheetDescription } from "@/components/ui/sheet";
 import Link from "next/link";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 function getBadges(game: Game) {
   return (
@@ -125,13 +128,11 @@ function GameDetails(game: Game, hash?: string, handleHash?: Function) {
             justifyItems: "center",
           }}
         >
-          <Image
+          <img
             src={getImage(game.thumbnail)}
             alt={game.name}
             loading="lazy"
             decoding="async"
-            width={500}
-            height={300}
             style={{ borderRadius: "5px" }}
           />
           <DialogTitle>{game.name}</DialogTitle>
@@ -206,13 +207,11 @@ export default function GameElement(
           alignItems: "center",
         }}
       >
-        <Image
+        <img
           src={getImage(game.thumbnail)}
           alt={game.name}
           loading="lazy"
           decoding="async"
-          width={500}
-          height={300}
           style={{
             borderRadius: "5px",
           }}
@@ -242,17 +241,22 @@ export default function GameElement(
             Last updated: {formatReadableDate(game.dateUpdated)}
           </Badge>
           <Separator style={{ margin: "15px 0" }} />
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => {
-              navigator.clipboard.writeText(
-                `https://digitalzone.vercel.app/api/embed?game=${game.id}`,
-              );
-            }}
-          >
-            <Link2 className="h-4 w-4" />
-          </Button>
+          <Popover>
+            <PopoverTrigger>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => {
+                  navigator.clipboard.writeText(
+                    `https://digitalzone.vercel.app/api/embed?game=${game.id}`,
+                  );
+                }}
+              >
+                <Link2 className="h-4 w-4" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent>Copied!</PopoverContent>
+          </Popover>
         </div>
       </CardFooter>
     </Card>
