@@ -130,7 +130,7 @@ export default function Home() {
                         <Heart />
                       </div>
                     </CardHeader>
-                    <CardContent>Made DZ</CardContent>
+                    <CardContent>Owner and Creator of DigitalZone</CardContent>
                   </Card>
                   <Card>
                     <CardHeader style={{ display: "flex" }}>
@@ -146,7 +146,7 @@ export default function Home() {
                         <Heart />
                       </div>
                     </CardHeader>
-                    <CardContent>Made the UI for this site</CardContent>
+                    <CardContent>Creator of this Site</CardContent>
                   </Card>
                 </div>
               </CardContent>
