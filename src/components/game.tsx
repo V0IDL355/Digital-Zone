@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,14 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { formatReadableDate } from "@/components/utils/date";
 import { Separator } from "@/components/ui/separator";
@@ -24,6 +15,16 @@ import React from "react";
 import { Download, Globe, Link2 } from "lucide-react";
 import { Game, getImage, tags } from "@/components/utils/utils";
 import Image from "next/image";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { SheetDescription } from "@/components/ui/sheet";
+import Link from "next/link";
 
 function getBadges(game: Game) {
   return (
@@ -91,11 +92,11 @@ function GameDetails(game: Game, hash?: string, handleHash?: Function) {
     : game.gameplay;
 
   return (
-    <Sheet defaultOpen={hash == `#${game.id}`}>
-      <SheetTrigger>
+    <Dialog defaultOpen={hash == `#${game.id}`}>
+      <DialogTrigger>
         <Button variant="outline">Open Game Details</Button>
-      </SheetTrigger>
-      <SheetContent
+      </DialogTrigger>
+      <DialogContent
         onCloseAutoFocus={() => {
           if (handleHash) {
             handleHash("");
@@ -108,9 +109,16 @@ function GameDetails(game: Game, hash?: string, handleHash?: Function) {
             }
           }
         }}
-        style={{ justifyContent: "center", textAlign: "center" }}
+        style={{
+          justifyContent: "center",
+          textAlign: "center",
+          overflowY: "auto",
+          width: "90vw",
+          borderRadius: "5px",
+          maxHeight: "90vh",
+        }}
       >
-        <SheetHeader
+        <DialogHeader
           style={{
             justifyContent: "center",
             textAlign: "center",
@@ -126,7 +134,7 @@ function GameDetails(game: Game, hash?: string, handleHash?: Function) {
             height={300}
             style={{ borderRadius: "5px" }}
           />
-          <SheetTitle>{game.name}</SheetTitle>
+          <DialogTitle>{game.name}</DialogTitle>
           {game.description != "" && (
             <div>
               <Separator style={{ margin: "15px 0" }} />
@@ -140,7 +148,7 @@ function GameDetails(game: Game, hash?: string, handleHash?: Function) {
             </div>
           )}
           <Separator style={{ margin: "15px 0" }} />
-          <SheetDescription>{game.subName}</SheetDescription>
+          <DialogDescription>{game.subName}</DialogDescription>
           <Separator style={{ margin: "15px 0" }} />
           {game.downloads.map((download) => (
             <Link key={game.name + download.name} href={download.link}>
@@ -168,9 +176,9 @@ function GameDetails(game: Game, hash?: string, handleHash?: Function) {
           )}
           <Separator style={{ margin: "15px 0" }} />
           <iframe src={gameplay} allowFullScreen></iframe>
-        </SheetHeader>
-      </SheetContent>
-    </Sheet>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
   );
 }
 
