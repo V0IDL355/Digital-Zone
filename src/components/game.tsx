@@ -28,6 +28,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { SiSteam } from "@icons-pack/react-simple-icons";
 
 function getBadges(game: Game) {
   return (
@@ -61,6 +62,31 @@ function getBadges(game: Game) {
       </div>
     </div>
   );
+}
+
+function getGenres(game: Game) {
+  return game.genres != "" ? (
+    <div>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 2,
+          margin: 5,
+        }}
+      >
+        {game.genres.split(/,\s*|, \s*/).map((genre) => {
+          return (
+            <Badge key={genre} variant="secondary" style={{ margin: 2 }}>
+              {genre}
+            </Badge>
+          );
+        })}
+      </div>
+      <Separator style={{ margin: "15px 0" }} />
+    </div>
+  ) : null;
 }
 
 const pattern =
@@ -221,6 +247,7 @@ export default function GameElement(
           <Separator style={{ margin: "15px 0" }} />
           {getBadges(game)}
           <Separator style={{ margin: "15px 0" }} />
+          {game.genres && getGenres(game)}
         </CardTitle>
         <CardDescription>{game.description}</CardDescription>
       </CardHeader>
@@ -241,22 +268,38 @@ export default function GameElement(
             Last updated: {formatReadableDate(game.dateUpdated)}
           </Badge>
           <Separator style={{ margin: "15px 0" }} />
-          <Popover>
-            <PopoverTrigger>
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => {
-                  navigator.clipboard.writeText(
-                    `https://digitalzone.vercel.app/api/embed?game=${game.id}`,
-                  );
-                }}
+          <div>
+            {game.id && (
+              <Popover>
+                <PopoverTrigger>
+                  <Button
+                    style={{ margin: "0 2px" }}
+                    variant="outline"
+                    size="icon"
+                    onClick={() => {
+                      navigator.clipboard.writeText(
+                        `https://digitalzone.vercel.app/api/embed?game=${game.id}`,
+                      );
+                    }}
+                  >
+                    <Link2 className="h-4 w-4" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent>Copied!</PopoverContent>
+              </Popover>
+            )}
+
+            {game.steamID && (
+              <Link
+                style={{ margin: "0 2px" }}
+                href={"https://store.steampowered.com/app/" + game.steamID}
               >
-                <Link2 className="h-4 w-4" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent>Copied!</PopoverContent>
-          </Popover>
+                <Button variant="outline" size="icon">
+                  <SiSteam className="h-4 w-4" />
+                </Button>
+              </Link>
+            )}
+          </div>
         </div>
       </CardFooter>
     </Card>

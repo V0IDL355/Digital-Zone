@@ -25,6 +25,13 @@ import GameElement from "@/components/game";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const infoTypes = [
   {
@@ -103,6 +110,12 @@ export default function Main() {
   const [notes, setNotes] = useState("");
   const notesInput = useRef(null);
 
+  const [steamID, setSteamID] = useState("");
+  const steamIDInput = useRef(null);
+
+  const [genres, setGenres] = useState("");
+  const genresInput = useRef(null);
+
   const game: Game = {
     name: name,
     id: id.replaceAll(" ", "_"),
@@ -122,6 +135,8 @@ export default function Main() {
     downloads: [{ name: "FileCrypt.cc", link: downloadLink }],
     achievements: achievements,
     dateUpdated: date,
+    steamID: steamID,
+    genres: genres,
   };
 
   const handlePressedChange = (tag: string, isPressed: boolean) => {
@@ -232,6 +247,24 @@ export default function Main() {
     }
 
     setAchievements(game.achievements);
+
+    setNotes(game.notes);
+    if (notesInput.current) {
+      // @ts-ignore
+      notesInput.current.value = game.notes;
+    }
+
+    setSteamID(game.steamID);
+    if (steamIDInput.current) {
+      // @ts-ignore
+      steamIDInput.current.value = game.steamID;
+    }
+
+    setGenres(game.genres);
+    if (genresInput.current) {
+      // @ts-ignore
+      genresInput.current.value = game.genres;
+    }
   }
 
   function reset() {
@@ -300,6 +333,24 @@ export default function Main() {
     }
 
     setAchievements(false);
+
+    setNotes("");
+    if (notesInput.current) {
+      // @ts-ignore
+      notesInput.current.value = "";
+    }
+
+    setSteamID("");
+    if (steamIDInput.current) {
+      // @ts-ignore
+      steamIDInput.current.value = "";
+    }
+
+    setGenres("");
+    if (genresInput.current) {
+      // @ts-ignore
+      genresInput.current.value = "";
+    }
   }
 
   const handleLoad = (event: any) => {
@@ -422,28 +473,58 @@ export default function Main() {
                     ref={nameInput}
                   />
                   <Separator style={{ margin: "15px 0" }} />
-                  {tags.map((tag, i) => {
-                    return (
-                      <Toggle
-                        onPressedChange={(isPressed) =>
-                          handlePressedChange(tag.value, isPressed)
-                        }
-                        style={{ margin: 2 }}
-                        key={tag.value}
-                        pressed={
-                          tag_list.find((tag_item) => tag_item === tag.value) !=
-                          null
-                        }
-                        variant="outline"
+                  <Accordion type="single" collapsible>
+                    <AccordionItem value="item-1">
+                      <AccordionTrigger
+                        style={{
+                          textAlign: "center",
+                          justifyContent: "center",
+                        }}
                       >
-                        {tag.label}
-                      </Toggle>
-                    );
-                  })}
-                  <Separator style={{ margin: "15px 0" }} />
+                        Tags
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <ScrollArea className="h-[200px] rounded-md border p-4">
+                          {tags.map((tag, i) => {
+                            return (
+                              <div
+                                className="flex items-center space-x-2"
+                                key={tag.value + i}
+                                style={{
+                                  textAlign: "center",
+                                  margin: "15px 0",
+                                  justifyContent: "center",
+                                }}
+                              >
+                                <Checkbox
+                                  checked={
+                                    tag_list.find(
+                                      (tag_item) => tag_item === tag.value,
+                                    ) != null || false
+                                  }
+                                  onCheckedChange={(isCheck) =>
+                                    handlePressedChange(tag.value, !!isCheck)
+                                  }
+                                  id={tag.value + i}
+                                  disabled={false}
+                                />
+                                <label
+                                  htmlFor={tag.value + i}
+                                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                >
+                                  {tag.label}
+                                </label>
+                              </div>
+                            );
+                          })}
+                        </ScrollArea>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
                   <Input
                     style={{
                       textAlign: "center",
+                      margin: "15px 0",
                     }}
                     placeholder={"Description"}
                     onChange={(e) => setDescription(e.target.value)}
@@ -584,11 +665,30 @@ export default function Main() {
                 <Separator style={{ margin: "15px 0" }} />
                 <Input
                   style={{ marginTop: 5, textAlign: "center" }}
-                  placeholder="Notes"
+                  placeholder="Notes (Optional)"
                   onChange={(e) => {
                     setNotes(e.target.value);
                   }}
                   ref={notesInput}
+                />
+                <Separator style={{ margin: "15px 0" }} />
+                <Input
+                  style={{ marginTop: 5, textAlign: "center" }}
+                  placeholder="Steam ID (Optional)"
+                  type="number"
+                  onChange={(e) => {
+                    setSteamID(e.target.value);
+                  }}
+                  ref={steamIDInput}
+                />
+                <Separator style={{ margin: "15px 0" }} />
+                <Input
+                  style={{ marginTop: 5, textAlign: "center" }}
+                  placeholder="Genres, exp: Action, RPG (Optional)"
+                  onChange={(e) => {
+                    setGenres(e.target.value);
+                  }}
+                  ref={genresInput}
                 />
               </CardContent>
             </Card>

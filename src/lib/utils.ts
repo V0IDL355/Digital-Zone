@@ -91,6 +91,8 @@ export interface Game {
   downloads: { name: string; link: string }[];
   achievements: boolean;
   dateUpdated: string;
+  steamID: string;
+  genres: string;
 }
 
 export function getImage(str: string) {
