@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Check, Gamepad2, Home, Lock, Menu } from "lucide-react";
+import { Check, Gamepad2, Home, Lock, Menu, Users } from "lucide-react";
 import React from "react";
-import { SiDiscord, SiGamedeveloper } from "@icons-pack/react-simple-icons";
+import { SiDiscord } from "@icons-pack/react-simple-icons";
 import {
   Drawer,
   DrawerContent,
@@ -31,24 +31,22 @@ const links = [
     icon: <Gamepad2 className="mr-2 h-4 w-4" />,
   },
   {
-    name: "Game Repack",
-    href: "https://game-repack.site/",
-    icon: <SiGamedeveloper className="mr-2 h-4 w-4" />,
+    name: "Collabs",
+    href: "collabs",
+    icon: <Users className="mr-2 h-4 w-4" />,
   },
 ];
 
 function NormalNav() {
   return (
     <div>
-      {links.map((link) => {
-        return (
-          <Link key={link.name} href={link.href} passHref>
-            <Button variant="outline" style={{ margin: 5 }}>
-              {link.icon} {link.name}
-            </Button>
-          </Link>
-        );
-      })}
+      {links.map((link) => (
+        <Link key={link.name} href={link.href} passHref>
+          <Button variant="outline" style={{ margin: 5 }}>
+            {link.icon} {link.name}
+          </Button>
+        </Link>
+      ))}
     </div>
   );
 }
