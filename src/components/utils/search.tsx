@@ -13,7 +13,6 @@ import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
 import { Game, getImage } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import Image from "next/image";
 
 const searchGamesByName = (games: Game[], searchTerm: string) => {
   return games
@@ -66,14 +65,12 @@ export default function SearchElement(games: Game[]) {
               >
                 {searchResults.map((game: Game, i) => {
                   return (
-                    <Image
+                    <img
                       key={game.name + i + i}
                       src={getImage(game.thumbnail)}
                       alt={game.name}
                       loading="lazy"
                       decoding="async"
-                      width={500}
-                      height={300}
                       style={{ margin: 5, borderRadius: 5, cursor: "pointer" }}
                       onClick={() => {
                         window.location.hash = game.id;
