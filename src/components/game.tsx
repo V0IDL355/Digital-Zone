@@ -66,16 +66,16 @@ function getBadges(game: Game) {
 
 function getGenres(game: Game) {
   return game.genres != "" ? (
-    <div>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 2,
-          margin: 5,
-        }}
-      >
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 2,
+        margin: 5,
+      }}
+    >
+      <div>
         {game.genres.split(/,\s*|, \s*/).map((genre) => {
           return (
             <Badge key={genre} variant="secondary" style={{ margin: 2 }}>
@@ -84,7 +84,6 @@ function getGenres(game: Game) {
           );
         })}
       </div>
-      <Separator style={{ margin: "15px 0" }} />
     </div>
   ) : null;
 }
@@ -248,6 +247,7 @@ export default function GameElement(
           {getBadges(game)}
           <Separator style={{ margin: "15px 0" }} />
           {game.genres && getGenres(game)}
+          {game.genres && <Separator style={{ margin: "15px 0" }} />}
         </CardTitle>
         <CardDescription>{game.description}</CardDescription>
       </CardHeader>
