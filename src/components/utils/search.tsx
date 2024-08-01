@@ -1,4 +1,8 @@
 "use client";
+import { Input } from "@/components/ui/input";
+import React, { useState } from "react";
+import { Game, getImage } from "@/lib/utils";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
 import {
   Drawer,
   DrawerContent,
@@ -6,13 +10,10 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
+} from "../ui/drawer";
 import { Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import React, { useState } from "react";
-import { Game, getImage } from "@/lib/utils";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const searchGamesByName = (games: Game[], searchTerm: string) => {
   return games
@@ -65,18 +66,23 @@ export default function SearchElement(games: Game[]) {
               >
                 {searchResults.map((game: Game, i) => {
                   return (
-                    <img
+                    <Link
+                      href={"#" + game.id}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       key={game.name + i + i}
-                      src={getImage(game.thumbnail)}
-                      alt={game.name}
-                      loading="lazy"
-                      decoding="async"
-                      style={{ margin: 5, borderRadius: 5, cursor: "pointer" }}
-                      onClick={() => {
-                        window.location.hash = game.id;
-                        window.location.reload();
-                      }}
-                    />
+                    >
+                      <img
+                        src={getImage(game.thumbnail)}
+                        alt={game.name}
+                        loading="lazy"
+                        decoding="async"
+                        style={{
+                          margin: 5,
+                          borderRadius: 5,
+                        }}
+                      />
+                    </Link>
                   );
                 })}
               </div>

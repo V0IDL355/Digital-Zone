@@ -293,6 +293,8 @@ export default function GameElement(
               <Link
                 style={{ margin: "0 2px" }}
                 href={"https://store.steampowered.com/app/" + game.steamID}
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Button variant="outline" size="icon">
                   <SiSteam className="h-4 w-4" />
