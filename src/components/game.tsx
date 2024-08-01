@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { formatReadableDate, Game, getImage, tags } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import React from "react";
-import { Download, Globe, Link2 } from "lucide-react";
+import { Clipboard, Download, Globe } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -282,7 +282,7 @@ export default function GameElement(
                       );
                     }}
                   >
-                    <Link2 className="h-4 w-4" />
+                    <Clipboard className="h-4 w-4" />
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent>Copied!</PopoverContent>
