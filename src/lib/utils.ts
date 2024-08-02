@@ -111,8 +111,26 @@ export function formatReadableDate(isoString: string): string {
   }).format(new Date(isoString));
 }
 
-export function extractOrigin(url: string): string {
-  const regex = /^(https?:\/\/[^\/]+)/;
+interface Domain {
+  label: string;
+  value: string;
+}
+
+const known_domains: Domain[] = [
+  { label: "FileCrypt.cc", value: "filecrypt.cc" },
+];
+
+export function extractDomain(url: string): {
+  domain: string;
+  matchedDomain: Domain;
+} {
+  const regex = /https?:\/\/([^\/]+)/;
   const match = url.match(regex);
-  return match ? match[0] : "";
+  const domain = match ? match[1] : "";
+  const matchedDomain = known_domains.find((dom) => dom.value === domain) || {
+    label: "Download",
+    value: "download",
+  };
+
+  return { domain, matchedDomain };
 }

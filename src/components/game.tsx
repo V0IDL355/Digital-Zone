@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
-  extractOrigin,
+  extractDomain,
   formatReadableDate,
   Game,
   getImage,
@@ -185,7 +185,7 @@ function GameDetails(game: Game, hash?: string, handleHash?: Function) {
           <Link href={game.download}>
             <Button style={{ minWidth: 180 }} variant="outline">
               <Download className="mr-2 h-4 w-4" />{" "}
-              {extractOrigin(game.download)}
+              {extractDomain(game.download).matchedDomain.label}
             </Button>
           </Link>
           <Link href={game.based.link}>
