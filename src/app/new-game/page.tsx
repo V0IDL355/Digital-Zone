@@ -20,7 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Medal } from "lucide-react";
+import { ArrowDown, ArrowUp, CircleX, Medal } from "lucide-react";
 import GameElement from "@/components/game";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -113,7 +113,7 @@ export default function Main() {
   const [steamID, setSteamID] = useState("");
   const steamIDInput = useRef(null);
 
-  const [genres, setGenres] = useState("");
+  const [genres, setGenres] = useState<string[]>([]);
   const genresInput = useRef(null);
 
   const game: Game = {
@@ -135,7 +135,7 @@ export default function Main() {
     achievements: achievements,
     dateUpdated: date,
     steamID: steamID,
-    genres: genres,
+    genres: genres.join(", "),
   };
 
   const handlePressedChange = (tag: string, isPressed: boolean) => {
@@ -259,11 +259,7 @@ export default function Main() {
       steamIDInput.current.value = game.steamID || "";
     }
 
-    setGenres(game.genres || "");
-    if (genresInput.current) {
-      // @ts-ignore
-      genresInput.current.value = game.genres || "";
-    }
+    setGenres(game.genres.split(/,\s*|, \s*/) || []);
   }
 
   function reset() {
@@ -345,11 +341,7 @@ export default function Main() {
       steamIDInput.current.value = "";
     }
 
-    setGenres("");
-    if (genresInput.current) {
-      // @ts-ignore
-      genresInput.current.value = "";
-    }
+    setGenres([]);
   }
 
   const handleLoad = (event: any) => {
@@ -418,6 +410,35 @@ export default function Main() {
       based_creditsInput.current.value = nfo;
     }
   }
+
+  const moveGenreDown = (index: number) => {
+    if (index < genres.length - 1) {
+      const newGenres = [...genres];
+      [newGenres[index], newGenres[index + 1]] = [
+        newGenres[index + 1],
+        newGenres[index],
+      ];
+      setGenres(newGenres);
+    }
+  };
+
+  const moveGenreUp = (index: number) => {
+    if (index > 0) {
+      const newGenres = [...genres];
+      [newGenres[index], newGenres[index - 1]] = [
+        newGenres[index - 1],
+        newGenres[index],
+      ];
+      setGenres(newGenres);
+    }
+  };
+
+  const addGenre = (genre: string) => {
+    if (!genres.includes(genre)) {
+      const newGenres = [...genres, genre];
+      setGenres(newGenres);
+    }
+  };
 
   return (
     <main>
@@ -684,11 +705,62 @@ export default function Main() {
                   ref={steamIDInput}
                 />
                 <Separator style={{ margin: "15px 0" }} />
+
+                <ScrollArea className="h-[200px] rounded-md border p-4">
+                  {genres.map((genre, i) => {
+                    return (
+                      <div
+                        className="flex items-center space-x-2"
+                        key={genre + i}
+                        style={{
+                          textAlign: "center",
+                          margin: "5px 0",
+                          justifyContent: "center",
+                          display: "flex",
+                        }}
+                      >
+                        <div
+                          style={{
+                            textAlign: "center",
+                            justifyContent: "center",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 2,
+                          }}
+                        >
+                          <ArrowUp
+                            onClick={() => moveGenreUp(i)}
+                            className="mr-2 h-4 w-4 cursor-pointer"
+                          />
+                          <ArrowDown
+                            onClick={() => moveGenreDown(i)}
+                            className="mr-2 h-4 w-4 cursor-pointer"
+                          />
+                          {genre}
+                          <CircleX
+                            onClick={() =>
+                              setGenres(genres.filter((g) => g !== genre))
+                            }
+                            className="mr-2 h-4 w-4 cursor-pointer"
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </ScrollArea>
+
                 <Input
                   style={{ marginTop: 5, textAlign: "center" }}
-                  placeholder="Genres, exp: Action, RPG (Optional)"
-                  onChange={(e) => {
-                    setGenres(e.target.value);
+                  placeholder="Genre, exp: Action (Optional)"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      if (genresInput.current) {
+                        // @ts-ignore
+                        addGenre(genresInput.current.value);
+                        // @ts-ignore
+                        genresInput.current.value = "";
+                      }
+                    }
                   }}
                   ref={genresInput}
                 />
