@@ -131,7 +131,7 @@ export default function Main() {
       link: based_link,
     },
     csrinru: csrinru,
-    downloads: [{ name: "FileCrypt.cc", link: downloadLink }],
+    download: downloadLink,
     achievements: achievements,
     dateUpdated: date,
     steamID: steamID,
