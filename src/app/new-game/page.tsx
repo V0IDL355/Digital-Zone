@@ -239,10 +239,10 @@ export default function Main() {
       based_linkInput.current.value = game.based.link || "";
     }
 
-    setDownloadLink(game.downloads[0].link || "");
+    setDownloadLink(game.download || "");
     if (downloadLinkInput.current) {
       // @ts-ignore
-      downloadLinkInput.current.value = game.downloads[0].link || "";
+      downloadLinkInput.current.value = game.download || "";
     }
 
     setAchievements(game.achievements);
