@@ -70,6 +70,10 @@ export const tags = [
     value: "codex",
     label: "Codex Emu",
   },
+{
+    value: "epic",
+    label: "Epic Games",
+  },
 ];
 
 export interface Game {
