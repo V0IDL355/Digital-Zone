@@ -9,7 +9,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { formatReadableDate, Game, getImage, tags } from "@/lib/utils";
+import {
+  extractOrigin,
+  formatReadableDate,
+  Game,
+  getImage,
+  tags,
+} from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import React from "react";
 import { Clipboard, Download, Globe } from "lucide-react";
@@ -176,13 +182,12 @@ function GameDetails(game: Game, hash?: string, handleHash?: Function) {
           <Separator style={{ margin: "15px 0" }} />
           <DialogDescription>{game.subName}</DialogDescription>
           <Separator style={{ margin: "15px 0" }} />
-          {game.downloads.map((download) => (
-            <Link key={game.name + download.name} href={download.link}>
-              <Button style={{ minWidth: 180 }} variant="outline">
-                <Download className="mr-2 h-4 w-4" /> {download.name}
-              </Button>
-            </Link>
-          ))}
+          <Link href={game.download}>
+            <Button style={{ minWidth: 180 }} variant="outline">
+              <Download className="mr-2 h-4 w-4" />{" "}
+              {extractOrigin(game.download)}
+            </Button>
+          </Link>
           <Link href={game.based.link}>
             <Button style={{ minWidth: 180 }} variant="outline">
               {text}

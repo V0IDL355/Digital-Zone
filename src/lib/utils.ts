@@ -87,7 +87,7 @@ export interface Game {
     link: string;
   };
   csrinru: string;
-  downloads: { name: string; link: string }[];
+  download: string;
   achievements: boolean;
   dateUpdated: string;
   steamID: string;
@@ -109,4 +109,10 @@ export function formatReadableDate(isoString: string): string {
     minute: "numeric",
     second: "numeric",
   }).format(new Date(isoString));
+}
+
+export function extractOrigin(url: string): string {
+  const regex = /^(https?:\/\/[^\/]+)/;
+  const match = url.match(regex);
+  return match ? match[0] : "";
 }
