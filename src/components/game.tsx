@@ -285,7 +285,9 @@ export default function GameElement(
                     <Clipboard className="h-4 w-4" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent>Copied!</PopoverContent>
+                <PopoverContent style={{ textAlign: "center" }}>
+                  Copied!
+                </PopoverContent>
               </Popover>
             )}
 

@@ -32,7 +32,7 @@ async function generateRssFeed() {
     feed.addItem({
       title: `${game.name} | ${game.subName}`,
       description: game.description,
-      link: game.link,
+      link: `https://digitalzone.vercel.app/games#${game.id}`,
       date: new Date(game.dateUpdated),
       image: getImage(game.thumbnail),
       guid: game.id,

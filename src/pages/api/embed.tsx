@@ -47,7 +47,7 @@ export default async function Embed(
     <head>
       <title>${game.name} | ${game.subName.toString()}</title>
       <meta http-equiv="refresh" content="0; URL=${game.link}"/>
-  <meta content="${game.link}" property="og:url"/>
+  <meta content="https://digitalzone.vercel.app/games#${game.id}" property="og:url"/>
   <meta content="${dominantColor}" data-react-helmet="true" name="theme-color"/>
   <meta
       content="${getImage(game.thumbnail)}"

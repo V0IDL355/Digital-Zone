@@ -77,7 +77,6 @@ export interface Game {
   id: string;
   notes: string;
   subName: string;
-  link: string;
   description: string;
   thumbnail: string;
   gameplay: string;

@@ -122,7 +122,6 @@ export default function Main() {
     notes: notes,
     subName: subText,
     description: description,
-    link: "https://digitalzone.vercel.app/games/#" + id.replaceAll(" ", "_"),
     thumbnail: thumbnail,
     gameplay: gameplay,
     tags: tag_list,
@@ -182,88 +181,88 @@ export default function Main() {
   };
 
   function load(game: Game) {
-    setName(game.name);
+    setName(game.name || "");
     if (nameInput.current) {
       // @ts-ignore
-      nameInput.current.value = game.name;
+      nameInput.current.value = game.name || "";
     }
 
-    setID(game.id);
+    setID(game.id || "");
     if (idInput.current) {
       // @ts-ignore
-      idInput.current.value = game.id;
+      idInput.current.value = game.id || "";
     }
 
-    setSubText(game.subName);
+    setSubText(game.subName || "");
     if (subTextInput.current) {
       // @ts-ignore
-      subTextInput.current.value = game.subName;
+      subTextInput.current.value = game.subName || "";
     }
 
-    setCsRinRU(game.csrinru);
+    setCsRinRU(game.csrinru || "");
     if (csrinru_linkInput.current) {
       // @ts-ignore
-      csrinru_linkInput.current.value = game.csrinru;
+      csrinru_linkInput.current.value = game.csrinru || "";
     }
 
-    setDescription(game.description);
+    setDescription(game.description || "");
     if (descriptionInput.current) {
       // @ts-ignore
-      descriptionInput.current.value = game.description;
+      descriptionInput.current.value = game.description || "";
     }
 
-    setThumbnail(game.thumbnail);
+    setThumbnail(game.thumbnail || "");
     if (thumbnailInput.current) {
       // @ts-ignore
-      thumbnailInput.current.value = game.thumbnail;
+      thumbnailInput.current.value = game.thumbnail || "";
     }
 
-    setGameplay(game.gameplay);
+    setGameplay(game.gameplay || "");
     if (gameplayInput.current) {
       // @ts-ignore
-      gameplayInput.current.value = game.gameplay;
+      gameplayInput.current.value = game.gameplay || "";
     }
 
     setTags(game.tags);
 
     setBasedInfo(game.based.info);
 
-    setBasedCredits(game.based.credits);
+    setBasedCredits(game.based.credits || "");
     if (based_creditsInput.current) {
       // @ts-ignore
-      based_creditsInput.current.value = game.based.credits;
+      based_creditsInput.current.value = game.based.credits || "";
     }
 
-    setBasedLink(game.based.link);
+    setBasedLink(game.based.link || "");
     if (based_linkInput.current) {
       // @ts-ignore
-      based_linkInput.current.value = game.based.link;
+      based_linkInput.current.value = game.based.link || "";
     }
 
-    setDownloadLink(game.downloads[0].link);
+    setDownloadLink(game.downloads[0].link || "");
     if (downloadLinkInput.current) {
       // @ts-ignore
-      downloadLinkInput.current.value = game.downloads[0].link;
+      downloadLinkInput.current.value = game.downloads[0].link || "";
     }
 
     setAchievements(game.achievements);
 
-    setNotes(game.notes);
+    setNotes(game.notes || "");
     if (notesInput.current) {
       // @ts-ignore
-      notesInput.current.value = game.notes;
+      notesInput.current.value = game.notes || "";
     }
 
-    setSteamID(game.steamID);
+    setSteamID(game.steamID || "");
     if (steamIDInput.current) {
       // @ts-ignore
-      steamIDInput.current.value = game.steamID;
+      steamIDInput.current.value = game.steamID || "";
     }
 
-    setGenres(game.genres);
+    setGenres(game.genres || "");
     if (genresInput.current) {
       // @ts-ignore
-      genresInput.current.value = game.genres;
+      genresInput.current.value = game.genres || "";
     }
   }
 
@@ -568,7 +567,10 @@ export default function Main() {
                     style={{ marginTop: 5 }}
                     placeholder="ID: Space Prison"
                     onChange={(e) => {
-                      e.target.value = e.target.value.replaceAll(" ", "_");
+                      e.target.value = e.target.value.replaceAll(
+                        /[^0-9A-Za-z]/g,
+                        "_",
+                      );
                       setID(e.target.value);
                     }}
                     ref={idInput}
