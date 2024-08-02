@@ -125,7 +125,7 @@ export function extractDomain(url: string): {
   matchedDomain: Domain;
 } {
   const regex = /https?:\/\/([^\/]+)/;
-  const match = url.match(regex);
+  const match = url ? url.match(regex) : "";
   const domain = match ? match[1] : "";
   const matchedDomain = known_domains.find((dom) => dom.value === domain) || {
     label: "Download",
