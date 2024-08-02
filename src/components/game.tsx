@@ -183,13 +183,13 @@ function GameDetails(game: Game, hash?: string, handleHash?: Function) {
           <DialogDescription>{game.subName}</DialogDescription>
           <Separator style={{ margin: "15px 0" }} />
           <Link href={game.download}>
-            <Button style={{ minWidth: 180 }} variant="outline">
+            <Button className="w-full" variant="outline">
               <Download className="mr-2 h-4 w-4" />{" "}
               {extractDomain(game.download).matchedDomain.label}
             </Button>
           </Link>
           <Link href={game.based.link}>
-            <Button style={{ minWidth: 180 }} variant="outline">
+            <Button className="w-full" variant="outline">
               {text}
             </Button>
           </Link>
@@ -198,7 +198,7 @@ function GameDetails(game: Game, hash?: string, handleHash?: Function) {
               <Separator style={{ margin: "15px 0" }} />
               <SheetDescription>
                 <Link key={game.name + game.csrinru} href={game.csrinru}>
-                  <Button style={{ minWidth: 180 }} variant="outline">
+                  <Button className="w-full" variant="outline">
                     <Globe className="mr-2 h-4 w-4" /> CSRINRU
                   </Button>
                 </Link>
@@ -206,7 +206,16 @@ function GameDetails(game: Game, hash?: string, handleHash?: Function) {
             </div>
           )}
           <Separator style={{ margin: "15px 0" }} />
-          <iframe src={gameplay} allowFullScreen></iframe>
+          <div className="w-full h-full">
+            <iframe
+              style={{
+                minHeight: "20vh",
+              }}
+              className="w-full h-full"
+              src={gameplay}
+              allowFullScreen
+            />
+          </div>
         </DialogHeader>
       </DialogContent>
     </Dialog>

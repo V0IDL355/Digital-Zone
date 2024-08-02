@@ -20,7 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ArrowDown, ArrowUp, CircleX, Medal } from "lucide-react";
+import { ArrowDown, ArrowUp, CircleX, Clipboard, Medal } from "lucide-react";
 import GameElement from "@/components/game";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -32,6 +32,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Textarea } from "@/components/ui/textarea";
 
 const infoTypes = [
   {
@@ -433,13 +434,6 @@ export default function Main() {
     }
   };
 
-  const addGenre = (genre: string) => {
-    if (!genres.includes(genre)) {
-      const newGenres = [...genres, genre];
-      setGenres(newGenres);
-    }
-  };
-
   return (
     <main>
       <Menubar
@@ -556,9 +550,11 @@ export default function Main() {
                 style={{ textAlign: "center", justifyContent: "center" }}
               >
                 <div
+                  className="w-full"
                   style={{
                     alignItems: "center",
                     justifyContent: "center",
+                    textAlign: "center",
                     gap: 2,
                     margin: 5,
                   }}
@@ -576,8 +572,8 @@ export default function Main() {
                   />
                   <Separator style={{ margin: "15px 0" }} />
                   <Input
-                    style={{ marginTop: 5 }}
-                    placeholder="Download Link Name"
+                    style={{ marginTop: 5, textAlign: "center" }}
+                    placeholder="Download Link"
                     onChange={(e) => {
                       setDownloadLink(e.target.value);
                     }}
@@ -585,7 +581,7 @@ export default function Main() {
                   />
                   <Separator style={{ margin: "15px 0" }} />
                   <Input
-                    style={{ marginTop: 5 }}
+                    style={{ marginTop: 5, textAlign: "center" }}
                     placeholder="ID: Space Prison"
                     onChange={(e) => {
                       e.target.value = e.target.value.replaceAll(
@@ -676,6 +672,7 @@ export default function Main() {
                 />
                 <Separator style={{ margin: "15px 0" }} />
                 <Toggle
+                  className="w-full"
                   variant="outline"
                   onPressedChange={(e) => {
                     setAchievements(e);
@@ -756,7 +753,13 @@ export default function Main() {
                     if (e.key === "Enter") {
                       if (genresInput.current) {
                         // @ts-ignore
-                        addGenre(genresInput.current.value);
+                        const input = genresInput.current.value;
+                        setGenres([
+                          ...genres,
+                          ...input
+                            .split(/,\s*|, \s*/)
+                            .filter((g: string) => g && !genres.includes(g)),
+                        ]);
                         // @ts-ignore
                         genresInput.current.value = "";
                       }
@@ -787,11 +790,13 @@ export default function Main() {
                   />
                 </div>
                 <Input
+                  className="w-full"
                   style={{ marginTop: 5, textAlign: "center" }}
                   placeholder="Load game, press enter to load it"
                   onKeyDown={(e) => handleLoad(e)}
                 />
                 <Button
+                  className="w-full"
                   style={{ marginTop: 5 }}
                   variant="outline"
                   onClick={handleAddUpdate}
@@ -799,36 +804,51 @@ export default function Main() {
                   Add or Update game
                 </Button>
                 <Button
+                  className="w-full"
                   style={{ marginTop: 5 }}
                   variant="outline"
                   onClick={handleSave}
                 >
                   Download new games.json
                 </Button>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    textAlign: "center",
-                    margin: 10,
-                    gap: 5,
-                  }}
-                >
-                  <ScrollArea className="h-1/5 w-1/2% rounded-md border">
-                    <div className="p-4 ">
-                      <h4 className="mb-4 text-sm font-medium leading-none">
-                        Games Added Or Updated
-                      </h4>
-                      {gamesList.map((game) => (
-                        <>
-                          <div key={game + "list"} className="text-sm">
-                            {game}
-                          </div>
-                          <Separator style={{ margin: "15px 0" }} />
-                        </>
-                      ))}
-                    </div>
-                  </ScrollArea>
+
+                <Separator style={{ margin: "15px 0" }} />
+
+                <ScrollArea className="h-1/5 w-full rounded-md border gap-2">
+                  <div className="p-4 ">
+                    <h4 className="mb-4 text-sm font-medium leading-none">
+                      Games Added Or Updated
+                    </h4>
+                    {gamesList.map((game) => (
+                      <>
+                        <div key={game + "list"} className="text-sm">
+                          {game}
+                        </div>
+                        <Separator style={{ margin: "15px 0" }} />
+                      </>
+                    ))}
+                  </div>
+                </ScrollArea>
+
+                <Separator style={{ margin: "15px 0" }} />
+
+                <div className="grid w-full gap-2">
+                  <Textarea
+                    className="h-52 resize-none"
+                    value={JSON.stringify(game, null, 2)}
+                    disabled
+                  />
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      navigator.clipboard.writeText(
+                        JSON.stringify(game, null, 2),
+                      );
+                    }}
+                  >
+                    <Clipboard className="h-4 w-4" />
+                    Copy json
+                  </Button>
                 </div>
               </CardContent>
             </Card>

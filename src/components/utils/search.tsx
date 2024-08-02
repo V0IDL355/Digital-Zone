@@ -3,93 +3,102 @@ import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
 import { Game, getImage } from "@/lib/utils";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "../ui/drawer";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-
-const searchGamesByName = (games: Game[], searchTerm: string) => {
-  return games
-    .filter((game) =>
-      game.name.toLowerCase().includes(searchTerm.toLowerCase()),
-    )
-    .slice(0, 5);
-};
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export default function SearchElement(games: Game[]) {
   const [searchResults, setSearchResults] = useState<Game[]>([]);
+  const results = searchResults.map((game: Game, i) => {
+    return (
+      <Link
+        href={"#" + game.id}
+        target="_blank"
+        rel="noopener noreferrer"
+        key={game.name + i + i}
+      >
+        <img
+          src={getImage(game.thumbnail)}
+          alt={game.name}
+          loading="lazy"
+          decoding="async"
+          style={{
+            margin: 5,
+            borderRadius: 5,
+          }}
+        />
+      </Link>
+    );
+  });
   return (
-    <Drawer
-      onClose={() => {
-        setSearchResults([]);
-      }}
-    >
-      <DrawerTrigger>
+    <Dialog>
+      <DialogTrigger>
         <Button variant="outline">
           <Search className="mr-2 h-4 w-4" /> Search
         </Button>
-      </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle style={{ textAlign: "center" }}>Search</DrawerTitle>
-          <DrawerDescription>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle style={{ textAlign: "center" }}>Search</DialogTitle>
+          <DialogDescription>
             <Input
               style={{ textAlign: "center" }}
+              autoFocus={true}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   // @ts-ignore
-                  setSearchResults(searchGamesByName(games, e.target.value));
+                  const input = e.target.value;
+
+                  const startsWithSearch = games
+                    .filter((game) =>
+                      game.name
+                        .toLowerCase()
+                        .split(" ")
+                        .some((word) => word.startsWith(input)),
+                    )
+                    .slice(0, 5);
+
+                  const includesSearch = games
+                    .filter((game) =>
+                      game.name.toLowerCase().includes(input.toLowerCase()),
+                    )
+                    .slice(0, 5);
+
+                  setSearchResults(
+                    startsWithSearch.length > 0
+                      ? startsWithSearch
+                      : includesSearch,
+                  );
                 }
               }}
               placeholder="Search"
             />
             <ScrollArea
-              style={{ marginTop: 10 }}
-              className="h-72 rounded-md border p-4"
+              style={{
+                marginTop: 10,
+                textAlign: "center",
+                alignItems: "center",
+              }}
+              className="h-72 rounded-md border p-4 overflow-auto"
               data-vaul-no-drag
             >
-              <div
-                className="p-1"
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: 2,
-                  justifyContent: "center",
-                }}
-              >
-                {searchResults.map((game: Game, i) => {
-                  return (
-                    <Link
-                      href={"#" + game.id}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      key={game.name + i + i}
-                    >
-                      <img
-                        src={getImage(game.thumbnail)}
-                        alt={game.name}
-                        loading="lazy"
-                        decoding="async"
-                        style={{
-                          margin: 5,
-                          borderRadius: 5,
-                        }}
-                      />
-                    </Link>
-                  );
-                })}
-              </div>
+              {results.length > 0 ? (
+                results
+              ) : (
+                <p>No results. Or u didn&apos;t search anything...</p>
+              )}
             </ScrollArea>
-          </DrawerDescription>
-        </DrawerHeader>
-      </DrawerContent>
-    </Drawer>
+          </DialogDescription>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
   );
 }
