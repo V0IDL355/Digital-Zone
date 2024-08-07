@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import navigation from "@/components/utils/navigation";
 import { Menubar, MenubarMenu } from "@/components/ui/menubar";
 import { Toggle } from "@/components/ui/toggle";
-import { Game, tags } from "@/lib/utils";
+import { Game, getImage, tags } from "@/lib/utils";
 import {
   Select,
   SelectContent,
@@ -123,7 +123,7 @@ export default function Main() {
     notes: notes,
     subName: subText,
     description: description,
-    thumbnail: thumbnail,
+    thumbnail: getImage(thumbnail),
     gameplay: gameplay,
     tags: tag_list,
     based: {

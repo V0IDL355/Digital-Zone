@@ -70,7 +70,7 @@ export const tags = [
     value: "codex",
     label: "Codex Emu",
   },
-{
+  {
     value: "epic",
     label: "Epic Games",
   },
@@ -99,8 +99,11 @@ export interface Game {
 }
 
 export function getImage(str: string) {
-  if (str.startsWith("thumbnails"))
-    return "https://raw.githubusercontent.com/god0654/games.json/main/" + str;
+  if (!str.startsWith("http"))
+    return (
+      "https://raw.githubusercontent.com/god0654/games.json/main/thumbnails/" +
+      str
+    );
   return str;
 }
 
