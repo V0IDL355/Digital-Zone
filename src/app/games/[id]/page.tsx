@@ -10,11 +10,6 @@ import { Card, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-type Props = {
-  params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
-
 async function getDominantColor(imageUrl: string | URL | Request) {
   const response = await fetch(imageUrl);
   const data = await response.arrayBuffer();
@@ -35,12 +30,18 @@ const sortedGames = response.sort(
     new Date(b.dateUpdated).getTime() - new Date(a.dateUpdated).getTime(),
 );
 
+interface Props {
+  params: { id: string };
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const game: Game = sortedGames.find((game: Game) => game.id === params.id);
 
   let dominantColor = await getDominantColor(getImage(game.thumbnail));
   return {
-    title: `${game.name} | ${game.subName.toString()}`,
+    title: game.name,
+    applicationName: "DigitalZone",
+    authors: [{ name: "DigitalZone" }],
     description: game.description,
     other: { "theme-color": dominantColor },
     openGraph: {
@@ -50,13 +51,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           url: getImage(game.thumbnail),
         },
       ],
+      releaseDate: game.dateUpdated,
+      siteName: "DigitalZone",
     },
   };
 }
 
 export default async function Page({ params }: { params: { id: string } }) {
   const game = sortedGames.find((game: Game) => game.id === params.id);
-
   !game && notFound();
 
   return (
