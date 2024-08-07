@@ -62,11 +62,10 @@ export default async function Page({ params }: { params: { id: string } }) {
   return (
     <html lang="en">
       <Head>
-        {/*<meta*/}
-        {/*  http-equiv="refresh"*/}
-        {/*  content={`0; URL=https://digitalzone.vercel.app/games#${game.id}`}*/}
-        {/*/>*/}
-        <></>
+        <meta
+          http-equiv="refresh"
+          content={`0; URL=https://digitalzone.vercel.app/games#${game.id}`}
+        />
       </Head>
       <body>
         <Card
