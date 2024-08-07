@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Check, Gamepad2, Home, Lock, Menu, Users } from "lucide-react";
@@ -11,6 +12,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { useWindowSize } from "react-use";
 
 const links = [
   {
@@ -82,17 +84,6 @@ function SmallNav() {
 
 export default function navigation() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [isSmallScreen, setIsSmallScreen] = React.useState<boolean>(true);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  React.useEffect(() => {
-    setIsSmallScreen(window.innerWidth < 925);
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 925);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-  return isSmallScreen ? SmallNav() : NormalNav();
+  const { width, height } = useWindowSize();
+  return width < 925 ? SmallNav() : NormalNav();
 }

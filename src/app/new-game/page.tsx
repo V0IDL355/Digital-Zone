@@ -9,10 +9,11 @@ import {
 import React, { useRef, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
-import navigation from "@/components/utils/navigation";
+import navigation from "@/components/navigation";
 import { Menubar, MenubarMenu } from "@/components/ui/menubar";
 import { Toggle } from "@/components/ui/toggle";
-import { Game, getImage, tags } from "@/lib/utils";
+import { Game, infoTypes, knownNFO } from "@/lib/types";
+import { getImage } from "@/lib/utils";
 import {
   Select,
   SelectContent,
@@ -21,7 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ArrowDown, ArrowUp, CircleX, Clipboard, Medal } from "lucide-react";
-import GameElement from "@/components/game";
+import GameElement from "@/components/game card/card";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -33,42 +34,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Textarea } from "@/components/ui/textarea";
-
-const infoTypes = [
-  {
-    value: "csf",
-    label: "CSF",
-  },
-  {
-    value: "nfo",
-    label: "NFO",
-  },
-  {
-    value: "release",
-    label: "Release",
-  },
-  {
-    value: "basedon",
-    label: "Based On",
-  },
-  {
-    value: "info",
-    label: "Info",
-  },
-];
-
-const knownNFO = [
-  "TENOKE",
-  "RUNE",
-  "TiNYiSO",
-  "RazorDOX",
-  "I_KnoW",
-  "DINOByTES",
-  "Unleashed",
-  "Razor1911",
-  "SKIDROW",
-  "FLT",
-];
+import { tags } from "@/components/game card/tags";
 
 export default function Main() {
   const [name, setName] = useState("");
@@ -134,7 +100,7 @@ export default function Main() {
     csrinru: csrinru,
     download: downloadLink,
     achievements: achievements,
-    dateUpdated: date,
+    dateUpdated: "when u save",
     steamID: steamID,
     genres: genres.join(", "),
   };
@@ -457,403 +423,398 @@ export default function Main() {
           display: "flex",
         }}
       >
-        <CardContent>
-          <div
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "1em",
+            justifyContent: "center",
+            margin: 25,
+          }}
+        >
+          {GameElement(game, 0)}
+          <Card
+            className="w-[350px]"
             style={{
-              margin: 5,
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "1em",
               justifyContent: "center",
+              textAlign: "center",
             }}
           >
-            {GameElement(game, 0)}
-            <Card
-              className="w-[350px]"
-              style={{
-                justifyContent: "center",
-                textAlign: "center",
-                marginTop: 10,
-              }}
-            >
-              <CardHeader>
-                <CardTitle>
-                  <Input
-                    style={{
-                      textAlign: "center",
-                    }}
-                    placeholder={"Name"}
-                    onChange={(e) => setName(e.target.value)}
-                    ref={nameInput}
-                  />
-                  <Separator style={{ margin: "15px 0" }} />
-                  <Accordion type="single" collapsible>
-                    <AccordionItem value="item-1">
-                      <AccordionTrigger
-                        style={{
-                          textAlign: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        Tags
-                      </AccordionTrigger>
-                      <AccordionContent>
-                        <ScrollArea className="h-[200px] rounded-md border p-4">
-                          {tags.map((tag, i) => {
-                            return (
-                              <div
-                                className="flex items-center space-x-2"
-                                key={tag.value + i}
-                                style={{
-                                  textAlign: "center",
-                                  margin: "15px 0",
-                                  justifyContent: "center",
-                                }}
+            <CardHeader>
+              <CardTitle>
+                <Input
+                  style={{
+                    textAlign: "center",
+                  }}
+                  placeholder={"Name"}
+                  onChange={(e) => setName(e.target.value)}
+                  ref={nameInput}
+                />
+                <Separator style={{ margin: "15px 0" }} />
+                <Accordion type="single" collapsible>
+                  <AccordionItem value="item-1">
+                    <AccordionTrigger
+                      style={{
+                        textAlign: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      Tags
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <ScrollArea className="h-[200px] rounded-md border p-4">
+                        {tags.map((tag, i) => {
+                          return (
+                            <div
+                              className="flex items-center space-x-2"
+                              key={tag.value + i}
+                              style={{
+                                textAlign: "center",
+                                margin: "15px 0",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <Checkbox
+                                checked={
+                                  tag_list.find(
+                                    (tag_item) => tag_item === tag.value,
+                                  ) != null || false
+                                }
+                                onCheckedChange={(isCheck) =>
+                                  handlePressedChange(tag.value, !!isCheck)
+                                }
+                                id={tag.value + i}
+                                disabled={false}
+                              />
+                              <label
+                                htmlFor={tag.value + i}
+                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                               >
-                                <Checkbox
-                                  checked={
-                                    tag_list.find(
-                                      (tag_item) => tag_item === tag.value,
-                                    ) != null || false
-                                  }
-                                  onCheckedChange={(isCheck) =>
-                                    handlePressedChange(tag.value, !!isCheck)
-                                  }
-                                  id={tag.value + i}
-                                  disabled={false}
-                                />
-                                <label
-                                  htmlFor={tag.value + i}
-                                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                >
-                                  {tag.label}
-                                </label>
-                              </div>
-                            );
-                          })}
-                        </ScrollArea>
-                      </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
-                  <Input
-                    style={{
-                      textAlign: "center",
-                      margin: "15px 0",
-                    }}
-                    placeholder={"Description"}
-                    onChange={(e) => setDescription(e.target.value)}
-                    ref={descriptionInput}
-                  />
-                </CardTitle>
-              </CardHeader>
-              <CardFooter
-                style={{ textAlign: "center", justifyContent: "center" }}
-              >
-                <div
-                  className="w-full"
+                                {tag.label}
+                              </label>
+                            </div>
+                          );
+                        })}
+                      </ScrollArea>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+                <Input
                   style={{
-                    alignItems: "center",
-                    justifyContent: "center",
                     textAlign: "center",
-                    gap: 2,
-                    margin: 5,
+                    margin: "15px 0",
                   }}
-                >
-                  <Separator style={{ margin: "15px 0" }} />
-                  <Input
-                    style={{
-                      textAlign: "center",
-                    }}
-                    placeholder={
-                      "Portable V1.0.0 + Build 15084287 & DLCs Included"
-                    }
-                    onChange={(e) => setSubText(e.target.value)}
-                    ref={subTextInput}
-                  />
-                  <Separator style={{ margin: "15px 0" }} />
-                  <Input
-                    style={{ marginTop: 5, textAlign: "center" }}
-                    placeholder="Download Link"
-                    onChange={(e) => {
-                      setDownloadLink(e.target.value);
-                    }}
-                    ref={downloadLinkInput}
-                  />
-                  <Separator style={{ margin: "15px 0" }} />
-                  <Input
-                    style={{ marginTop: 5, textAlign: "center" }}
-                    placeholder="ID: Space Prison"
-                    onChange={(e) => {
-                      e.target.value = e.target.value.replaceAll(
-                        /[^0-9A-Za-z]/g,
-                        "_",
-                      );
-                      setID(e.target.value);
-                    }}
-                    ref={idInput}
-                  />
-                </div>
-              </CardFooter>
-            </Card>
-            <Card
-              className="w-[350px]"
-              style={{
-                justifyContent: "center",
-                textAlign: "center",
-                marginTop: 10,
-              }}
+                  placeholder={"Description"}
+                  onChange={(e) => setDescription(e.target.value)}
+                  ref={descriptionInput}
+                />
+              </CardTitle>
+            </CardHeader>
+            <CardFooter
+              style={{ textAlign: "center", justifyContent: "center" }}
             >
-              <CardHeader>
-                <CardTitle>Extra info</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Input
-                  style={{
-                    textAlign: "center",
-                  }}
-                  placeholder={"Gameplay"}
-                  onChange={(e) => setGameplay(e.target.value)}
-                  ref={gameplayInput}
-                />
+              <div
+                className="w-full"
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "center",
+                  gap: 2,
+                  margin: 5,
+                }}
+              >
                 <Separator style={{ margin: "15px 0" }} />
                 <Input
                   style={{
                     textAlign: "center",
                   }}
-                  placeholder={"Thumbnail"}
-                  onChange={(e) => setThumbnail(e.target.value)}
-                  ref={thumbnailInput}
-                />
-                <Separator style={{ margin: "15px 0" }} />
-                <Select
-                  onValueChange={(e) => {
-                    setBasedInfo(e);
-                  }}
-                  value={based_info}
-                >
-                  <SelectTrigger style={{ marginTop: 5 }}>
-                    <SelectValue placeholder="Info Type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {infoTypes.map((infoType) => {
-                      return (
-                        <SelectItem key={infoType.value} value={infoType.value}>
-                          {infoType.label}
-                        </SelectItem>
-                      );
-                    })}
-                  </SelectContent>
-                </Select>
-                <Input
-                  style={{ marginTop: 5, textAlign: "center" }}
-                  placeholder="Credits, ex: ✧GͥOͣDͫ✧"
-                  onChange={(e) => {
-                    setBasedCredits(e.target.value);
-                  }}
-                  ref={based_creditsInput}
-                />
-                <Input
-                  style={{ marginTop: 5, textAlign: "center" }}
-                  placeholder="Link to the post"
-                  onChange={(e) => {
-                    setBasedLink(e.target.value);
-                    checkUrlForNFO(e.target.value);
-                  }}
-                  ref={based_linkInput}
+                  placeholder={
+                    "Portable V1.0.0 + Build 15084287 & DLCs Included"
+                  }
+                  onChange={(e) => setSubText(e.target.value)}
+                  ref={subTextInput}
                 />
                 <Separator style={{ margin: "15px 0" }} />
                 <Input
                   style={{ marginTop: 5, textAlign: "center" }}
-                  placeholder="CSRINRU link (Optional)"
+                  placeholder="Download Link"
                   onChange={(e) => {
-                    setCsRinRU(e.target.value);
+                    setDownloadLink(e.target.value);
                   }}
-                  ref={csrinru_linkInput}
-                />
-                <Separator style={{ margin: "15px 0" }} />
-                <Toggle
-                  className="w-full"
-                  variant="outline"
-                  onPressedChange={(e) => {
-                    setAchievements(e);
-                  }}
-                  pressed={achievements}
-                >
-                  <Medal className="mr-2 h-4 w-4" />
-                  Achievements
-                </Toggle>
-                <Separator style={{ margin: "15px 0" }} />
-                <Input
-                  style={{ marginTop: 5, textAlign: "center" }}
-                  placeholder="Notes (Optional)"
-                  onChange={(e) => {
-                    setNotes(e.target.value);
-                  }}
-                  ref={notesInput}
+                  ref={downloadLinkInput}
                 />
                 <Separator style={{ margin: "15px 0" }} />
                 <Input
                   style={{ marginTop: 5, textAlign: "center" }}
-                  placeholder="Steam ID (Optional)"
-                  type="number"
+                  placeholder="ID: Space Prison"
                   onChange={(e) => {
-                    setSteamID(e.target.value);
+                    e.target.value = e.target.value.replaceAll(
+                      /[^0-9A-Za-z]/g,
+                      "_",
+                    );
+                    setID(e.target.value);
                   }}
-                  ref={steamIDInput}
+                  ref={idInput}
                 />
-                <Separator style={{ margin: "15px 0" }} />
-
-                <ScrollArea className="h-[200px] rounded-md border p-4">
-                  {genres.map((genre, i) => {
+              </div>
+            </CardFooter>
+          </Card>
+          <Card
+            className="w-[350px]"
+            style={{
+              justifyContent: "center",
+              textAlign: "center",
+            }}
+          >
+            <CardHeader>
+              <CardTitle>Extra info</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Input
+                style={{
+                  textAlign: "center",
+                }}
+                placeholder={"Gameplay"}
+                onChange={(e) => setGameplay(e.target.value)}
+                ref={gameplayInput}
+              />
+              <Separator style={{ margin: "15px 0" }} />
+              <Input
+                style={{
+                  textAlign: "center",
+                }}
+                placeholder={"Thumbnail"}
+                onChange={(e) => setThumbnail(e.target.value)}
+                ref={thumbnailInput}
+              />
+              <Separator style={{ margin: "15px 0" }} />
+              <Select
+                onValueChange={(e) => {
+                  setBasedInfo(e);
+                }}
+                value={based_info}
+              >
+                <SelectTrigger style={{ marginTop: 5 }}>
+                  <SelectValue placeholder="Info Type" />
+                </SelectTrigger>
+                <SelectContent>
+                  {infoTypes.map((infoType) => {
                     return (
-                      <div
-                        className="flex items-center space-x-2"
-                        key={genre + i}
-                        style={{
-                          textAlign: "center",
-                          margin: "5px 0",
-                          justifyContent: "center",
-                          display: "flex",
-                        }}
-                      >
-                        <div
-                          style={{
-                            textAlign: "center",
-                            justifyContent: "center",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 2,
-                          }}
-                        >
-                          <ArrowUp
-                            onClick={() => moveGenreUp(i)}
-                            className="mr-2 h-4 w-4 cursor-pointer"
-                          />
-                          <ArrowDown
-                            onClick={() => moveGenreDown(i)}
-                            className="mr-2 h-4 w-4 cursor-pointer"
-                          />
-                          {genre}
-                          <CircleX
-                            onClick={() =>
-                              setGenres(genres.filter((g) => g !== genre))
-                            }
-                            className="mr-2 h-4 w-4 cursor-pointer"
-                          />
-                        </div>
-                      </div>
+                      <SelectItem key={infoType.value} value={infoType.value}>
+                        {infoType.label}
+                      </SelectItem>
                     );
                   })}
-                </ScrollArea>
+                </SelectContent>
+              </Select>
+              <Input
+                style={{ marginTop: 5, textAlign: "center" }}
+                placeholder="Credits, ex: ✧GͥOͣDͫ✧"
+                onChange={(e) => {
+                  setBasedCredits(e.target.value);
+                }}
+                ref={based_creditsInput}
+              />
+              <Input
+                style={{ marginTop: 5, textAlign: "center" }}
+                placeholder="Link to the post"
+                onChange={(e) => {
+                  setBasedLink(e.target.value);
+                  checkUrlForNFO(e.target.value);
+                }}
+                ref={based_linkInput}
+              />
+              <Separator style={{ margin: "15px 0" }} />
+              <Input
+                style={{ marginTop: 5, textAlign: "center" }}
+                placeholder="CSRINRU link (Optional)"
+                onChange={(e) => {
+                  setCsRinRU(e.target.value);
+                }}
+                ref={csrinru_linkInput}
+              />
+              <Separator style={{ margin: "15px 0" }} />
+              <Toggle
+                className="w-full"
+                variant="outline"
+                onPressedChange={(e) => {
+                  setAchievements(e);
+                }}
+                pressed={achievements}
+              >
+                <Medal className="mr-2 h-4 w-4" />
+                Achievements
+              </Toggle>
+              <Separator style={{ margin: "15px 0" }} />
+              <Input
+                style={{ marginTop: 5, textAlign: "center" }}
+                placeholder="Notes (Optional)"
+                onChange={(e) => {
+                  setNotes(e.target.value);
+                }}
+                ref={notesInput}
+              />
+              <Separator style={{ margin: "15px 0" }} />
+              <Input
+                style={{ marginTop: 5, textAlign: "center" }}
+                placeholder="Steam ID (Optional)"
+                type="number"
+                onChange={(e) => {
+                  setSteamID(e.target.value);
+                }}
+                ref={steamIDInput}
+              />
+              <Separator style={{ margin: "15px 0" }} />
 
-                <Input
-                  style={{ marginTop: 5, textAlign: "center" }}
-                  placeholder="Genre, exp: Action (Optional)"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      if (genresInput.current) {
-                        // @ts-ignore
-                        const input = genresInput.current.value;
-                        setGenres([
-                          ...genres,
-                          ...input
-                            .split(/,\s*|, \s*/)
-                            .filter((g: string) => g && !genres.includes(g)),
-                        ]);
-                        // @ts-ignore
-                        genresInput.current.value = "";
-                      }
+              <ScrollArea className="h-[200px] rounded-md border p-4">
+                {genres.map((genre, i) => {
+                  return (
+                    <div
+                      className="flex items-center space-x-2"
+                      key={genre + i}
+                      style={{
+                        textAlign: "center",
+                        margin: "5px 0",
+                        justifyContent: "center",
+                        display: "flex",
+                      }}
+                    >
+                      <div
+                        style={{
+                          textAlign: "center",
+                          justifyContent: "center",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 2,
+                        }}
+                      >
+                        <ArrowUp
+                          onClick={() => moveGenreUp(i)}
+                          className="mr-2 h-4 w-4 cursor-pointer"
+                        />
+                        <ArrowDown
+                          onClick={() => moveGenreDown(i)}
+                          className="mr-2 h-4 w-4 cursor-pointer"
+                        />
+                        {genre}
+                        <CircleX
+                          onClick={() =>
+                            setGenres(genres.filter((g) => g !== genre))
+                          }
+                          className="mr-2 h-4 w-4 cursor-pointer"
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </ScrollArea>
+
+              <Input
+                style={{ marginTop: 5, textAlign: "center" }}
+                placeholder="Genre, exp: Action (Optional)"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    if (genresInput.current) {
+                      // @ts-ignore
+                      const input = genresInput.current.value;
+                      setGenres([
+                        ...genres,
+                        ...input
+                          .split(/,\s*|, \s*/)
+                          .filter((g: string) => g && !genres.includes(g)),
+                      ]);
+                      // @ts-ignore
+                      genresInput.current.value = "";
                     }
-                  }}
-                  ref={genresInput}
-                />
-              </CardContent>
-            </Card>
-            <Card
-              className="w-[350px]"
-              style={{
-                justifyContent: "center",
-                textAlign: "center",
-                marginTop: 10,
-              }}
-            >
-              <CardHeader>
-                <CardTitle>Games.json</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid w-full max-w-sm items-center gap-1.5">
-                  <Input
-                    type="file"
-                    accept=".json"
-                    onChange={handleJSON}
-                    ref={fileInputRef}
-                  />
-                </div>
+                  }
+                }}
+                ref={genresInput}
+              />
+            </CardContent>
+          </Card>
+          <Card
+            className="w-[350px]"
+            style={{
+              justifyContent: "center",
+              textAlign: "center",
+            }}
+          >
+            <CardHeader>
+              <CardTitle>Games.json</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid w-full max-w-sm items-center gap-1.5">
                 <Input
-                  className="w-full"
-                  style={{ marginTop: 5, textAlign: "center" }}
-                  placeholder="Load game, press enter to load it"
-                  onKeyDown={(e) => handleLoad(e)}
+                  type="file"
+                  accept=".json"
+                  onChange={handleJSON}
+                  ref={fileInputRef}
+                />
+              </div>
+              <Input
+                className="w-full"
+                style={{ marginTop: 5, textAlign: "center" }}
+                placeholder="Load game, press enter to load it"
+                onKeyDown={(e) => handleLoad(e)}
+              />
+              <Button
+                className="w-full"
+                style={{ marginTop: 5 }}
+                variant="outline"
+                onClick={handleAddUpdate}
+              >
+                Add or Update game
+              </Button>
+              <Button
+                className="w-full"
+                style={{ marginTop: 5 }}
+                variant="outline"
+                onClick={handleSave}
+              >
+                Download new games.json
+              </Button>
+
+              <Separator style={{ margin: "15px 0" }} />
+
+              <ScrollArea className="h-1/5 w-full rounded-md border gap-2">
+                <div className="p-4 ">
+                  <h4 className="mb-4 text-sm font-medium leading-none">
+                    Games Added Or Updated
+                  </h4>
+                  {gamesList.map((game) => (
+                    <>
+                      <div key={game + "list"} className="text-sm">
+                        {game}
+                      </div>
+                      <Separator style={{ margin: "15px 0" }} />
+                    </>
+                  ))}
+                </div>
+              </ScrollArea>
+
+              <Separator style={{ margin: "15px 0" }} />
+
+              <div className="grid w-full gap-2">
+                <Textarea
+                  className="h-52 resize-none"
+                  value={JSON.stringify(game, null, 2)}
+                  disabled
                 />
                 <Button
-                  className="w-full"
-                  style={{ marginTop: 5 }}
                   variant="outline"
-                  onClick={handleAddUpdate}
+                  onClick={() => {
+                    navigator.clipboard.writeText(
+                      JSON.stringify(game, null, 2),
+                    );
+                  }}
                 >
-                  Add or Update game
+                  <Clipboard className="h-4 w-4" />
+                  Copy json
                 </Button>
-                <Button
-                  className="w-full"
-                  style={{ marginTop: 5 }}
-                  variant="outline"
-                  onClick={handleSave}
-                >
-                  Download new games.json
-                </Button>
-
-                <Separator style={{ margin: "15px 0" }} />
-
-                <ScrollArea className="h-1/5 w-full rounded-md border gap-2">
-                  <div className="p-4 ">
-                    <h4 className="mb-4 text-sm font-medium leading-none">
-                      Games Added Or Updated
-                    </h4>
-                    {gamesList.map((game) => (
-                      <>
-                        <div key={game + "list"} className="text-sm">
-                          {game}
-                        </div>
-                        <Separator style={{ margin: "15px 0" }} />
-                      </>
-                    ))}
-                  </div>
-                </ScrollArea>
-
-                <Separator style={{ margin: "15px 0" }} />
-
-                <div className="grid w-full gap-2">
-                  <Textarea
-                    className="h-52 resize-none"
-                    value={JSON.stringify(game, null, 2)}
-                    disabled
-                  />
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      navigator.clipboard.writeText(
-                        JSON.stringify(game, null, 2),
-                      );
-                    }}
-                  >
-                    <Clipboard className="h-4 w-4" />
-                    Copy json
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </CardContent>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </Card>
     </main>
   );

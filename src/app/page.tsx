@@ -2,7 +2,7 @@
 
 import { Menubar, MenubarMenu } from "@/components/ui/menubar";
 import React, { useEffect, useState } from "react";
-import navigation from "@/components/utils/navigation";
+import navigation from "@/components/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertCircle, Gamepad2, Heart } from "lucide-react";
 import { Separator } from "@/components/ui/separator";

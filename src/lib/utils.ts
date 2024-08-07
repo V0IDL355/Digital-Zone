@@ -5,99 +5,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const tags = [
-  {
-    value: "gse",
-    label: "GoldBerg",
-  },
-  {
-    value: "ofme",
-    label: "Online-Fix.me",
-  },
-  {
-    value: "mc",
-    label: "Microsoft",
-  },
-  {
-    value: "og",
-    label: "Origin",
-  },
-  {
-    value: "unsteam",
-    label: "Unsteam",
-  },
-  {
-    value: "steamless",
-    label: "Steamless",
-  },
-  {
-    value: "gog",
-    label: "GOG",
-  },
-  {
-    value: "drmfree",
-    label: "DRM Free",
-  },
-  {
-    value: "switch",
-    label: "Switch",
-  },
-  {
-    value: "scene",
-    label: "Scene Crack",
-  },
-  {
-    value: "denuvo",
-    label: "Denuvo",
-  },
-  {
-    value: "denuvoremoved",
-    label: "Denuvo Removed",
-  },
-  {
-    value: "enigmaprotector",
-    label: "Enigma Protector",
-  },
-  {
-    value: "steamapicheckbypass",
-    label: "SteamAPICheckBypass",
-  },
-  {
-    value: "rune",
-    label: "Rune Emu",
-  },
-  {
-    value: "codex",
-    label: "Codex Emu",
-  },
-  {
-    value: "epic",
-    label: "Epic Games",
-  },
-];
-
-export interface Game {
-  name: string;
-  id: string;
-  notes: string;
-  subName: string;
-  description: string;
-  thumbnail: string;
-  gameplay: string;
-  tags: string[];
-  based: {
-    info: "csf" | "nfo" | "release" | "basedon" | "info" | string;
-    credits: string;
-    link: string;
-  };
-  csrinru: string;
-  download: string;
-  achievements: boolean;
-  dateUpdated: string;
-  steamID: string;
-  genres: string;
-}
-
 export function getImage(str: string) {
   if (!str.startsWith("http"))
     return (
@@ -108,14 +15,19 @@ export function getImage(str: string) {
 }
 
 export function formatReadableDate(isoString: string): string {
-  return new Intl.DateTimeFormat("en-US", {
+  const date = new Intl.DateTimeFormat("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
     hour: "numeric",
     minute: "numeric",
     second: "numeric",
-  }).format(new Date(isoString));
+  });
+  try {
+    return date.format(new Date(isoString));
+  } catch {
+    return isoString;
+  }
 }
 
 interface Domain {

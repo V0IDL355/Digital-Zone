@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { Game, getImage } from "@/lib/utils";
+import { Game } from "@/lib/types";
+import { getImage } from "@/lib/utils";
 import { Feed } from "feed";
 
 type ResponseData = {

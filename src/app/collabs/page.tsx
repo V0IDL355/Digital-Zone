@@ -1,7 +1,7 @@
 "use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Menubar, MenubarMenu } from "@/components/ui/menubar";
-import navigation from "@/components/utils/navigation";
+import navigation from "@/components/navigation";
 import React from "react";
 import { SiGamedeveloper, SiReddit } from "@icons-pack/react-simple-icons";
 import Link from "next/link";

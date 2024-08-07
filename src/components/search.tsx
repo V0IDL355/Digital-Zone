@@ -1,7 +1,8 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
-import { Game, getImage } from "@/lib/utils";
+import { Game } from "@/lib/types";
+import { getImage } from "@/lib/utils";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -14,33 +15,31 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Separator } from "@/components/ui/separator";
 
 export default function SearchElement(games: Game[]) {
   const [searchResults, setSearchResults] = useState<Game[]>([]);
   const results = searchResults.map((game: Game, i) => {
     return (
-      <Link
-        href={"#" + game.id}
-        target="_blank"
-        rel="noopener noreferrer"
-        key={game.name + i + i}
-      >
-        <img
-          src={getImage(game.thumbnail)}
-          alt={game.name}
-          loading="lazy"
-          decoding="async"
-          style={{
-            margin: 5,
-            borderRadius: 5,
-          }}
-        />
-      </Link>
+      <div key={game.name + i + i}>
+        {i != 0 && <Separator style={{ margin: "15px 0" }} />}
+        <Link href={"#" + game.id} target="_blank" rel="noopener noreferrer">
+          <img
+            src={getImage(game.thumbnail)}
+            alt={game.name}
+            loading="lazy"
+            decoding="async"
+            style={{
+              borderRadius: 5,
+            }}
+          />
+        </Link>
+      </div>
     );
   });
   return (
-    <Dialog>
-      <DialogTrigger>
+    <Dialog onOpenChange={(open) => !open && setSearchResults([])}>
+      <DialogTrigger asChild={true}>
         <Button variant="outline">
           <Search className="mr-2 h-4 w-4" /> Search
         </Button>

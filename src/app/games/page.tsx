@@ -1,10 +1,7 @@
 "use client";
-
 import { Menubar, MenubarMenu } from "@/components/ui/menubar";
 import React, { useEffect, useState } from "react";
-import navigation from "@/components/utils/navigation";
-import SearchElement from "@/components/utils/search";
-import { Game } from "@/lib/utils";
+import SearchElement from "@/components/search";
 
 import {
   Pagination,
@@ -17,8 +14,11 @@ import {
 } from "@/components/ui/pagination";
 import { Toggle } from "@/components/ui/toggle";
 import { Input } from "@/components/ui/input";
-import GameElement from "@/components/game";
 import { Button } from "@/components/ui/button";
+import { Game } from "@/lib/types";
+import { useWindowSize } from "react-use";
+import navigation from "@/components/navigation";
+import gameCard from "@/components/game card/card";
 
 function splitArrayIntoChunks<T>(array: T[], chunkSize: number): T[][] {
   const result: T[][] = [];
@@ -29,18 +29,8 @@ function splitArrayIntoChunks<T>(array: T[], chunkSize: number): T[][] {
 }
 
 export default function Games() {
-  const [isSmallScreen, setIsSmallScreen] = React.useState<boolean>(true);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useEffect(() => {
-    setIsSmallScreen(window.innerWidth < 1100);
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 1100);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const { width, height } = useWindowSize();
+  const isSmallScreen = width < 1100;
 
   const [games, setGames] = useState([[]]);
   const [sortedGames, setSortedGames] = useState([]);
@@ -212,7 +202,7 @@ export default function Games() {
           }}
         >
           {games[page].map((game: Game, i) =>
-            GameElement(game, i, hash, handleHash),
+            gameCard(game, i, hash, handleHash),
           )}
         </div>
         {paging()}
