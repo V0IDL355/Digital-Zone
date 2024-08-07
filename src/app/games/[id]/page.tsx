@@ -4,19 +4,26 @@ import React from "react";
 import { notFound } from "next/navigation";
 import { getImage } from "@/lib/utils";
 import sharp from "sharp";
-import Vibrant from "node-vibrant";
-import Head from "next/head";
 import { Card, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import Vibrant from "node-vibrant";
 
 async function getDominantColor(imageUrl: string | URL | Request) {
-  const response = await fetch(imageUrl);
-  const data = await response.arrayBuffer();
-  const buffer = Buffer.from(data);
-  const pngBuffer = await sharp(buffer).toFormat("png").toBuffer();
-  const palette = await Vibrant.from(pngBuffer).quality(1).getPalette();
-  return palette?.Vibrant?.hex || "#09090b";
+  try {
+    const response = await fetch(imageUrl);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch image: ${response.statusText}`);
+    }
+    const data = await response.arrayBuffer();
+    const buffer = Buffer.from(data);
+    const pngBuffer = await sharp(buffer).toFormat("png").toBuffer();
+    const palette = await Vibrant.from(pngBuffer).quality(1).getPalette();
+    return palette?.Vibrant?.hex || "#09090b";
+  } catch (error) {
+    console.error("Error processing image:", error);
+    return "#09090b"; // Return a default color in case of an error
+  }
 }
 
 const response = await (
@@ -63,12 +70,12 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   return (
     <html lang="en">
-      <Head>
+      <head>
         <meta
           http-equiv="refresh"
           content={`0; URL=https://digitalzone.vercel.app/games#${game.id}`}
         />
-      </Head>
+      </head>
       <body>
         <Card
           style={{
