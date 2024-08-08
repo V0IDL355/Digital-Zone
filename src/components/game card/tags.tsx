@@ -71,6 +71,10 @@ export const tags = [
     value: "epic",
     label: "Epic Games",
   },
+  {
+    value: "p2p",
+    label: "Crack P2P",
+  },
 ];
 
 export default function getTags(game: Game) {
