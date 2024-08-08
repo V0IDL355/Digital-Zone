@@ -101,13 +101,17 @@ export default function details(
             <div>{getFormattedSubName(game.subName)}</div>
           </DialogDescription>
           <Separator style={{ margin: "15px 0" }} />
-          <Link href={game.download}>
+          <Link href={game.download} target="_blank" rel="noopener noreferrer">
             <Button className="w-full" variant="outline">
               <Download className="mr-2 h-4 w-4" />{" "}
               {extractDomain(game.download).matchedDomain.label}
             </Button>
           </Link>
-          <Link href={game.based.link}>
+          <Link
+            href={game.based.link}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Button className="w-full" variant="outline">
               {text}
             </Button>
@@ -116,7 +120,12 @@ export default function details(
             <div>
               <Separator style={{ margin: "15px 0" }} />
               <SheetDescription>
-                <Link key={game.name + game.csrinru} href={game.csrinru}>
+                <Link
+                  key={game.csrinru}
+                  href={game.csrinru}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Button className="w-full" variant="outline">
                     <Globe className="mr-2 h-4 w-4" /> CSRINRU
                   </Button>

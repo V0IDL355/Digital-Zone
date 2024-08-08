@@ -23,7 +23,7 @@ export default function SearchElement(games: Game[]) {
     return (
       <div key={game.name + i + i}>
         {i != 0 && <Separator style={{ margin: "15px 0" }} />}
-        <Link href={"#" + game.id} target="_blank" rel="noopener noreferrer">
+        <Link href={"#" + game.id}>
           <img
             src={getImage(game.thumbnail)}
             alt={game.name}
