@@ -54,4 +54,5 @@ export const knownNFO = [
   "Razor1911",
   "SKIDROW",
   "FLT",
+  "DOGE",
 ];
