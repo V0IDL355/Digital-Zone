@@ -44,10 +44,13 @@ async function generateRssFeed() {
   return feed;
 }
 
-export default async function Rss2(
+export default async function Rss_feed(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>,
 ) {
+  if (req.headers["user-agent"] != "Readybot.io (https://readybot.io)")
+    res.status(403) && res.write("Unauthorized") && res.end();
+
   const feed = await generateRssFeed();
   res.status(200);
   res.setHeader("Content-Type", "text/xml");
